@@ -82,7 +82,6 @@ export class ProductsProvider {
         }else{
           this.showMessage('服务器响应错误！');
         }
-        callback();
 		});
   }
 
@@ -125,8 +124,47 @@ export class ProductsProvider {
         }else{
           this.showMessage('服务器响应错误！');
         }
-        callback();
 		});
   }
+  
+  public BuyGz(uuid, unit, custid, callback){
+    this.showLoading();
+    let param = {
+        iotUuit: this.uuid,
+        iotUnit: unit,
+        custId: custid
+    };
+    this.rest.all("sales").customPOST(null, "v1/products/buy", param).subscribe(res=>{
+        this.closeLoading();
+        callback(res);
+    }, (res)=>{
+        this.closeLoading();
+        if(res && res.data){
+          this.showMessage(res.data.msg);
+        }else{
+          this.showMessage('服务器响应错误！');
+        }
+    });
+  }
+  
+  public BuyCallbackGz(uuid, unit, callback){
+    this.showLoading();
+    let param = {
+        uuid: this.uuid,
+        unit: unit
+    };
+    this.rest.all("sales").customPOST(null, "v1/products/callback", param).subscribe(res=>{
+        this.closeLoading();
+        callback(res);
+    }, (res)=>{
+        this.closeLoading();
+        if(res && res.data){
+          this.showMessage(res.data.msg);
+        }else{
+          this.showMessage('服务器响应错误！');
+        }
+    });
+  }
+  
 
 }

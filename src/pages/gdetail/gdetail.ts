@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
+import { ProductsProvider } from '../../providers/products/products';
 
 /**
  * Generated class for the GdetailPage page.
@@ -15,20 +16,43 @@ import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-ang
 })
 export class GdetailPage {
   public detail:any = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl:AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl:AlertController,
+    public pserv:ProductsProvider
+  ) {
     this.detail = this.navParams.get('data');
     console.log(this.detail);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GdetailPage');
+  buygood(){
+    
+    this.pserv.BuyGz(this.detail.iotUuit, this.detail.iotUnit, this.detail.salesId, res=>{
+      this.GotoZf();
+    });
   }
 
-  buygood(){
+  GotoZf(){
     let alert = this.alertCtrl.create({
-      title: '购买成功！',
-      subTitle: '购买成功。',
-      buttons: ['确定']
+      title: '成功！',
+      subTitle: '订单提交成功，去支付！',
+      buttons: [
+        {
+          text: '确定',
+          handler: () => {
+            this.pserv.BuyCallbackGz(this.detail.iotUuit, this.detail.iotUnit, res=>{
+              this.pserv.showMessage('购买成功！');
+
+              setTimeout(()=>{
+                this.navCtrl.setRoot('GoodsPage');
+              }, 2000);
+
+            });
+          }
+        }
+      ],
+      
     });
     alert.present();
   }

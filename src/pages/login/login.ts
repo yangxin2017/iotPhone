@@ -39,11 +39,11 @@ export class LoginPage {
 
   onSubmit(ev:any){
     this.storage.get('isSeller').then((isSeller) => {
-      isSeller = 1;
+      //isSeller = 1;
       this.userv.Login(ev.value.phoneNumber, ev.value.password, res=>{
         this.storage.set('userphone', ev.value.phoneNumber);
         this.storage.set('token', res.token);
-        this.storage.set('isSeller', isSeller);
+        //this.storage.set('isSeller', isSeller);
         this.navCtrl.setRoot('GoodsPage');
       });
     

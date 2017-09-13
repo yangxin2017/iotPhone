@@ -2,4 +2,11 @@ carousel {
     ion-slides{
         height:auto;
     }
+    .imgcontainer{
+        height:300px;
+        line-height:300px;
+        background-color: #dddddd;
+        border-bottom:solid 2px #12C8B9;
+        img{vertical-align:middle;}
+    }
 }

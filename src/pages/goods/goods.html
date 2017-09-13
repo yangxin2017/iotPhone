@@ -8,15 +8,15 @@
 
 <header [showLeft]="false" [title]="'商品列表'" (clkAddBut)="addGoods($event)" [showAdd]="isSeller"></header>
 
-<div class="lists" *ngIf="isSeller">
+<div class="lists">
     <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="lists">
         商品列表
       </ion-segment-button>
-      <ion-segment-button value="self">
+      <ion-segment-button value="self" *ngIf="isSeller">
         我的列表
       </ion-segment-button>
-      <ion-segment-button value="status">
+      <ion-segment-button value="status" *ngIf="isSeller">
         柜子状态
       </ion-segment-button>
       <ion-segment-button value="infor">
