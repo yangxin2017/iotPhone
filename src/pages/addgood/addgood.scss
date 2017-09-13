@@ -1,0 +1,30 @@
+page-addgood {
+    .upfile{
+        background:url(../assets/images/add.jpg) no-repeat 0 0;
+        background-size: 100% auto;
+        position:relative;
+        height:330px;
+        line-height:330px;
+        overflow:hidden;
+        border:solid 3px #ccc;
+        padding:5px;
+        input{
+            opacity:0;
+            position:absolute;
+            left:0;top:0;
+            width:100%;height:100%;
+            z-index:2;
+        }
+        img{
+            width:100%;z-index:1;
+            left:0px;top:0px;
+            vertical-align:middle;
+        }
+    }
+
+    .foot-txt{
+        button{
+            margin:0;
+        }
+    }
+}

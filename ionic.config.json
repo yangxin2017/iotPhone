@@ -1,0 +1,14 @@
+{
+  "name": "iotPhone",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+    {
+      "path": "/sales/",
+      "proxyUrl": "http://60.205.212.99/sales/"
+    }
+  ]
+}

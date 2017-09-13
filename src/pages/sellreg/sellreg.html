@@ -1,0 +1,61 @@
+<!--
+  Generated template for the SellregPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+<header [title]="'注册'"></header>
+
+</ion-header>
+
+
+<ion-content padding class="back-bg">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <ion-list>
+
+      <ion-item>
+        <ion-label>请输入手机号</ion-label>
+        <ion-input type="text" formControlName="phoneNumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>请输入密码</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>请输入昵称</ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>请输入身份证号</ion-label>
+        <ion-input type="text" formControlName="verifyNumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>请输入支付账号</ion-label>
+        <ion-input type="text" formControlName="moneyCode"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div padding>
+      <span class="help-block text-danger" *ngIf="myForm.get('phoneNumber').touched && myForm.get('phoneNumber').hasError('invalidPhone')">请输入正确的电话号码</span>
+      <span class="help-block text-danger" *ngIf="myForm.get('password').touched && myForm.get('password').hasError('minlength')">密码不少于6个字符</span>
+      <span class="help-block text-danger" *ngIf="myForm.get('username').touched && myForm.get('username').hasError('username')">请输入用户昵称</span>
+      <span class="help-block text-danger" *ngIf="myForm.get('verifyNumber').touched && myForm.get('verifyNumber').hasError('invalidVerify')">请输入正确的身份证号码</span>
+      <span class="help-block text-danger" *ngIf="myForm.get('moneyCode').touched && myForm.get('moneyCode').hasError('moneyCode')">请输入支付账号</span>
+      <br/>
+      <button type="submit" [disabled]="myForm.invalid" class="pri-button" ion-button full round>注册</button>
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer>
+<div class="foot-txt">
+  注册登录即表示您同意我们的用户许可协议
+</div>
+</ion-footer>

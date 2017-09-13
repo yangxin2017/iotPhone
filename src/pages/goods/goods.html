@@ -1,0 +1,93 @@
+<!--
+  Generated template for the GoodsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+<header [showLeft]="false" [title]="'商品列表'" (clkAddBut)="addGoods($event)" [showAdd]="isSeller"></header>
+
+<div class="lists" *ngIf="isSeller">
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="lists">
+        商品列表
+      </ion-segment-button>
+      <ion-segment-button value="self">
+        我的列表
+      </ion-segment-button>
+      <ion-segment-button value="status">
+        柜子状态
+      </ion-segment-button>
+      <ion-segment-button value="infor">
+        个人信息
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+</ion-header>
+
+  
+
+<ion-content>
+
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'lists'">
+      <carousel [data]="datas"></carousel>
+      
+      <ion-list *ngIf="datas && datas.length > 0">
+        <buylist *ngFor="let d of datas" [data]="d" (clkItem)="clkItem(d)"></buylist>
+      </ion-list>
+
+      <div *ngIf="datas && datas.length <= 0" class="t-center">
+        没有查询到数据
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'self'">
+      <ion-list *ngIf="mdatas && mdatas.length > 0">
+        <buylist *ngFor="let d of mdatas" [data]="d" (clkItem)="clkItem(d)"></buylist>
+      </ion-list>
+      <div *ngIf="mdatas && mdatas.length <= 0" class="t-center">
+        没有查询到数据
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'status'">
+      <gzlist></gzlist>
+    </div>
+
+    <div *ngSwitchCase="'infor'">
+      <ion-list>
+        <ion-item class="item" *ngIf="username">
+          <ion-icon style="color:#10AEFF" name='md-person' item-start></ion-icon>
+          昵称
+          <ion-note style="color:#333;" item-end>{{username}}</ion-note>
+        </ion-item>
+
+        <ion-item class="item" *ngIf="userphone">
+          <ion-icon style="color:#8EDF11" name='md-call' item-start></ion-icon>
+          手机号
+          <ion-note style="color:#333;" item-end>{{userphone}}</ion-note>
+        </ion-item>
+
+        <ion-item class="item" *ngIf="verifynum">
+          <ion-icon style="color:#FFCC00" name='ios-card' item-start></ion-icon>
+          身份证
+          <ion-note style="color:#333;" item-end>{{verifynum}}</ion-note>
+        </ion-item>
+
+        <ion-item class="item" *ngIf="zfcode">
+          <ion-icon style="color:#FA5151" name='logo-usd' item-start></ion-icon>
+          支付账号
+          <ion-note style="color:#333;" item-end>{{zfcode}}</ion-note>
+        </ion-item>
+
+        <ion-item class="item">
+          <button ion-button full color="danger" (click)="quitUser()" style="height:45px;box-shadow:none;">退出当前账号</button>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  </div>
+</ion-content>

@@ -1,0 +1,28 @@
+page-goods {
+    .lists{
+        margin-bottom:10px;
+        padding:0 10px;
+        .segment-md .segment-button{
+            margin:0 15px 0 0;
+            &:last-child{
+                margin-right:0;
+            }
+        }
+        .segment-md .segment-button{
+            color:#12C8B9;
+            font-size:14px;
+        }
+        .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+            border-color:#12C8B9;
+        }
+    }
+    .item{
+        color:#999;
+    }
+    .item-md ion-icon[item-left] + .item-inner, .item-md ion-icon[item-left] + .item-input, .item-md ion-icon[item-start] + .item-inner, .item-md ion-icon[item-start] + .item-input{
+        margin-left:7px;
+    }
+    .t-center{
+        text-align:center;
+    }
+}

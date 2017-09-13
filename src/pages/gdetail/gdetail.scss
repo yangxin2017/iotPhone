@@ -1,0 +1,50 @@
+page-gdetail {
+    .img-container{
+        height: 400px;
+        line-height:400px;
+        img{vertical-align:middle;}
+    }
+    .price{
+        line-height:50px;background:#12C8B9;
+        color:#fff;height:50px;
+        label{
+            font-size:16px;
+            small{font-size:12px;}
+            margin-left:15px;
+        }
+        .ma-button{
+            float:right;
+            height:100%;
+            margin:0;
+        }
+    }
+    .title{
+        color:#333;font-size:16px;
+        line-height:25px;padding:10px;
+        span{float:right;color:#ccc;font-size:14px;}
+    }
+    .content{
+        padding:0 10px;
+        color:#666;font-size:16px;line-height:22px;
+    }
+
+    .foot-txt{
+        background:#eee;height:40px;line-height:40px;
+        text-align:left;
+        .sp-con{
+            margin:4px 10px 0 10px;color:#12C8B9;display:inline-block;line-height:40px;
+            .cir{
+                display:inline-block;font-size:18px;line-height:25px;
+                width:25px;height:25px;border-radius:25px;
+                border:solid 1px #12C8B9;color:#12C8B9;text-align:center;
+                ion-icon{
+                    position:relative;
+                    top:1px;
+                }
+            }
+            .lbl{
+                margin: 0 0 0 5px;position:relative;top:-2px;
+            }
+        }
+    }
+}

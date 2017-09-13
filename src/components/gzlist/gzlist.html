@@ -1,0 +1,19 @@
+<!-- Generated template for the GzlistComponent component -->
+
+  <div class="tl-title">
+    <span class="md"><span class="gz sgz"><span></span></span>空开</span>
+    <span class="md"><span class="gz sgz sel_kk"><span><ion-icon name="ios-close"></ion-icon></span></span>空关</span>
+    <span class="md"><span class="gz sgz sel_mg"><span><ion-icon name="ios-close"></ion-icon></span></span>满关</span>
+    <span class="md"><span class="gz sgz sel_mk"><span><ion-icon name="ios-close"></ion-icon></span></span>满开</span>
+
+    <span class="md"><span class="gz sgz sel"><span><ion-icon name="ios-checkmark"></ion-icon></span></span>已选</span>
+  <div class="xz-lists">
+    <span *ngFor="let p of gzlist" class="md" (click)="checkGz(p)">
+      <span [class.sel_kk]="p.sta == 0"  [class.sel_mg]="p.sta == 2" [class.sel_mk]="p.sta == 3" [class.sel]="currentSelNum == p.num" class="gz">
+        <span>
+          <ion-icon *ngIf="p.sta != 1" name="ios-close"></ion-icon>
+          <ion-icon *ngIf="currentSelNum == p.num" name="ios-checkmark"></ion-icon>
+        </span>
+      </span>
+    </span>
+  </div>

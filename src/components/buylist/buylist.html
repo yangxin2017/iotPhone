@@ -1,0 +1,11 @@
+<!-- Generated template for the BuylistComponent component -->
+<ion-item *ngIf="data" class="buy-item" (click)="clkItemList()">
+  <div class="new-button" item-start>
+    <span>NEW</span>
+  </div>
+  <h2>{{data.description}}</h2>
+  <p>{{data.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+  <span class="img-container" item-end>
+    <img class="img" src="{{data.pictureUrl}}" alt="" />
+  </span>
+</ion-item>

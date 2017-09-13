@@ -1,0 +1,18 @@
+buylist {
+    .new-button{
+        span{
+            display:inline-block;
+            width:42px;line-height:24px;
+            background:#FBD76E;text-align:center;
+            color:#E7A42A;font-size:12px;
+            border-radius:5px;
+        }
+    }
+    .buy-item{
+        .img-container{width:90px;height:67px;overflow:hidden;}
+        .img{height:67px;}
+        h2{color:#333;font-size:16px;}
+        h3{color:#727272;font-size:14px;}
+        p{color:#BABABA;font-size:12px;margin-top:10px;}
+    }
+}

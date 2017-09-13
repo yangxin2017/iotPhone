@@ -1,0 +1,10 @@
+<!-- Generated template for the HeaderComponent component -->
+<div>
+  <button (click)="goback()" ion-button icon-only clear class="pleft" color="dark">
+    <ion-icon *ngIf="showLeft" name="md-arrow-back"></ion-icon>
+  </button>
+  <span [class.lf2]="showLeft">{{title}}</span>
+  <button *ngIf="showAdd" (click)="addInfor()" ion-button icon-only clear class="pright" color="dark">
+    <ion-icon name="md-add"></ion-icon>
+  </button>
+</div>

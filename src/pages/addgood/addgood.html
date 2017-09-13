@@ -1,0 +1,52 @@
+<!--
+  Generated template for the AddgoodPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+<header [title]="'添加商品'"></header>
+
+</ion-header>
+
+<ion-content padding>
+  <div class="upfile">
+    <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChange($event)" />
+    <!--<input type="file" name="file" imageUpload (imageSelected)="selected($event)" />-->
+    <img [src]="previewImgUrl" [hidden]="!previewImgUrl" />
+  </div>
+  <form #mf [formGroup]="myForm">
+  <ion-list>
+
+    <ion-item>
+      <ion-label>商品名称</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>商品简介</ion-label>
+      <ion-input type="text" formControlName="desc"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>商品价格</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>是否可退</ion-label>
+      <ion-toggle checked="true" formControlName="isQuit"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+<div class="foot-txt">
+  <button type="submit" [disabled]="myForm.invalid || !previewImgUrl" (click)="onSubmit(myForm)" ion-button full class="pri-button">提交订单</button>
+</div>
+</ion-footer>
+
