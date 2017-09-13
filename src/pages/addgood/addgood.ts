@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { FileUploader } from 'ng2-file-upload';
 
+import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer';
+
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { ProductsProvider } from '../../providers/products/products';
 /**
@@ -17,6 +19,7 @@ import { ProductsProvider } from '../../providers/products/products';
 @Component({
   selector: 'page-addgood',
   templateUrl: 'addgood.html',
+  providers: [FileTransfer]
 })
 export class AddgoodPage {
   public previewImgUrl:any = null;
@@ -25,7 +28,6 @@ export class AddgoodPage {
   public productMod:any = {
     salesId: '',
     description: '',
-    file: null,
     price: '',
     iotUuit: '',
     iotUnit: ''
@@ -36,7 +38,8 @@ export class AddgoodPage {
     public navParams: NavParams,
     public fb:FormBuilder,
     public storage:Storage,
-    public pserv:ProductsProvider
+    public pserv:ProductsProvider,
+    private transfer: FileTransfer
   ) {
     this.myForm = this.fb.group({
         name: ['', Validators.compose([Validators.required])],
@@ -89,21 +92,60 @@ export class AddgoodPage {
   onSubmit(param:any){
     this.productMod.description = param.value.desc;
     this.productMod.price = param.value.price;
+    //this.productMod.file = this.previewImgUrl;
+    var fd = new FormData();
+    fd.append('file', this.previewImgUrl, 'temp.jpg');
+    
+    this.pserv.AddGood(this.productMod, fd, res=>{
+      this.pserv.CloseGz('', this.productMod.iotUnit, res=>{
+        this.navCtrl.setRoot('GoodsPage');
+      });
+    });
+    /*this.productMod.description = param.value.desc;
+    this.productMod.price = param.value.price;
     this.uploader.setOptions({
       url: this.pserv.AddShop(this.productMod)
     });
     this.uploadFile();
-
+    */
     //console.log(this.productMod);
+  }
+
+  picSelected(ev:string){
+    this.previewImgUrl = this.dataURItoBlob(ev);
+  }
+
+  dataURItoBlob(dataURI) {
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = decodeURIComponent(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
   }
 
   selectedFileOnChange(ev:any){
     let $this = this;
     this.uploader.queue.forEach((q:any, i)=>{
       let reader = new FileReader();
+      alert(i);
       reader.readAsDataURL(q.some);
       reader.onload = function () {
         $this.previewImgUrl = this.result;
+        alert($this.previewImgUrl);
+      };
+      reader.onerror = function(ev:any){
+        alert(ev.target.error)
       };
     });
   }

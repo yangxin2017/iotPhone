@@ -14,6 +14,7 @@ import { ProductsProvider } from '../providers/products/products';
 import { IotsProvider } from '../providers/iots/iots';
 
 export function RestangularConfigFactory (RestangularProvider, appserv) {
+  //RestangularProvider.setBaseUrl('http://60.205.212.99/sales/');
   RestangularProvider.setDefaultHeaders({'Authorization': ''});
 
   let token = appserv.getToken();

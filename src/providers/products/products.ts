@@ -94,9 +94,9 @@ export class ProductsProvider {
     return url;
   }
 
-  public AddGood(param, callback){
+  public AddGood(param, file, callback){
     this.showLoading();
-    this.rest.all("sales").customPOST(null, "v1/products", param).subscribe(res=>{
+    this.rest.all("sales").customPOST(file, "v1/products", param).subscribe(res=>{
         this.closeLoading();
         callback(res);
 		}, (res)=>{
@@ -106,7 +106,6 @@ export class ProductsProvider {
         }else{
           this.showMessage('服务器响应错误！');
         }
-        callback();
 		});
   }
 

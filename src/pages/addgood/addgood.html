@@ -12,9 +12,10 @@
 
 <ion-content padding>
   <div class="upfile">
-    <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChange($event)" />
-    <!--<input type="file" name="file" imageUpload (imageSelected)="selected($event)" />-->
-    <img [src]="previewImgUrl" [hidden]="!previewImgUrl" />
+    <uploadpic (selectedPic)="picSelected($event)"></uploadpic>
+    <!--<input type="file" ng2FileSelect [uploader]="uploader" (change)="selectedFileOnChange($event)" />
+    <input type="file" name="file" imageUpload (imageSelected)="selected($event)" />
+    <img [src]="previewImgUrl" [hidden]="!previewImgUrl" />-->
   </div>
   <form #mf [formGroup]="myForm">
   <ion-list>
@@ -46,7 +47,7 @@
 
 <ion-footer>
 <div class="foot-txt">
-  <button type="submit" [disabled]="myForm.invalid || !previewImgUrl" (click)="onSubmit(myForm)" ion-button full class="pri-button">提交订单</button>
+  <button type="submit" [disabled]="myForm.invalid" (click)="onSubmit(myForm)" ion-button full class="pri-button">提交订单</button>
 </div>
 </ion-footer>
 

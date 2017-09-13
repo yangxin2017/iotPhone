@@ -4,15 +4,19 @@ import { HeaderComponent } from './header/header';
 import { BuylistComponent } from './buylist/buylist';
 import { CarouselComponent } from './carousel/carousel';
 import { GzlistComponent } from './gzlist/gzlist';
+import { UploadpicComponent } from './uploadpic/uploadpic';
+
 @NgModule({
 	declarations: [HeaderComponent,
     BuylistComponent,
     CarouselComponent,
-    GzlistComponent],
+    GzlistComponent,
+    UploadpicComponent],
 	imports: [IonicPageModule],
 	exports: [HeaderComponent,
     BuylistComponent,
     CarouselComponent,
-    GzlistComponent]
+    GzlistComponent,
+    UploadpicComponent]
 })
 export class ComponentsModule {}
