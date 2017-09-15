@@ -19,10 +19,17 @@
   </div>
   <form #mf [formGroup]="myForm">
   <ion-list>
-
+    <!--
     <ion-item>
       <ion-label>商品名称</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>-->
+
+    <ion-item>
+      <ion-label>柜子编号</ion-label>
+      <ion-select formControlName="gzlists" cancelText="取消" okText="确定">
+        <ion-option *ngFor="let gz of gzlist" [value]="gz.num">柜子编号{{gz.num}}</ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>

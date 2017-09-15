@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 
 import { ToastController,LoadingController } from 'ionic-angular';
 import { Restangular } from 'ngx-restangular';
+import { Storage } from '@ionic/storage';
 
 
 /*
@@ -15,10 +16,17 @@ import { Restangular } from 'ngx-restangular';
 export class IotsProvider {
   public loader:any = null;
   public loaderTime:any = null;
-  public uuid:string = 'DFwONv7jUo1VP0jqTMg3kxgyZYQ=';
+  public uuid:string = '';
 
-  constructor(private rest: Restangular, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(private rest: Restangular, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private store:Storage) {
     
+  }
+
+  private getEWM(callback){
+    this.store.get('ewm').then(ewm=>{
+      this.uuid = ewm;
+      callback();
+    });
   }
 
   public showLoading(){
@@ -52,21 +60,30 @@ export class IotsProvider {
   }
 
   public getIots(uuid:string, callback){
-    this.showLoading();
-    let param = {
-        uuid: this.uuid
-    };
-    this.rest.all("sales").customGET("v1/iots", param).subscribe(res=>{
-        this.closeLoading();
-        callback(res);
-		}, (res)=>{
-        this.closeLoading();
-		    if(res && res.data){
-          this.showMessage(res.data.msg);
-        }else{
+    this.getEWM(()=>{
+      if(uuid == ''){
+        uuid = this.uuid;
+      }
+      this.showLoading();
+      let param = {
+          uuid: uuid
+      };
+      this.rest.all("sales").customGET("v1/iots", param).subscribe(res=>{
+          this.closeLoading();
+          callback(res);
+      }, (res)=>{
+        
+          this.closeLoading();
+          if(res && res.data){
+            this.showMessage(res.data.msg);
+          }else{
+            this.showMessage('服务器响应错误！');
+          }
           this.showMessage('服务器响应错误！');
-        }
-		});
+      });
+      
+    });
+    
   }
 
 }

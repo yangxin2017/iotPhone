@@ -8,6 +8,7 @@ import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-nati
 
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { ProductsProvider } from '../../providers/products/products';
+import { IotsProvider } from '../../providers/iots/iots';
 /**
  * Generated class for the AddgoodPage page.
  *
@@ -39,22 +40,45 @@ export class AddgoodPage {
     public fb:FormBuilder,
     public storage:Storage,
     public pserv:ProductsProvider,
+    public iserv:IotsProvider,
     private transfer: FileTransfer
   ) {
     this.myForm = this.fb.group({
-        name: ['', Validators.compose([Validators.required])],
+        //name: ['', Validators.compose([Validators.required])],
+        gzlists: ['', Validators.compose([Validators.required])],
         desc: ['', Validators.compose([Validators.required])],
         price: ['', Validators.compose([Validators.required])],
         isQuit: ['', Validators.compose([])]
     });
 
-    let gzMod = this.navParams.get('gzmod');
-    this.productMod.iotUuit = gzMod[1];
-    this.productMod.iotUnit = gzMod[0].num;
+    //let gzMod = this.navParams.get('gzmod');
+    //this.productMod.iotUuit = gzMod[1];
+    //this.productMod.iotUnit = gzMod[0].num;
     this.storage.get('userphone').then(phone=>{
       this.productMod.salesId = phone;
     });
 
+    this.initGzList();
+
+  }
+
+  public gzlist:any = [];
+  initGzList(){
+    this.gzlist = [];
+    this.iserv.getIots('', res=>{
+      this.productMod.iotUuit = res.uuid;
+      let rs = [];
+      for(let k in res.statusMapping){
+        if(res.statusMapping[k] == 1){
+          rs.push({
+            num: k,
+            sta: res.statusMapping[k]
+          });
+        }
+      }
+      this.gzlist = rs;
+      console.log(rs);
+    });
   }
 
   public uploader:FileUploader = new FileUploader({
@@ -92,6 +116,8 @@ export class AddgoodPage {
   onSubmit(param:any){
     this.productMod.description = param.value.desc;
     this.productMod.price = param.value.price;
+    this.productMod.iotUnit = param.value.gzlists;
+
     //this.productMod.file = this.previewImgUrl;
     var fd = new FormData();
     fd.append('file', this.previewImgUrl, 'temp.jpg');

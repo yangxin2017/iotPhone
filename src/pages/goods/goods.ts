@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ProductsProvider } from '../../providers/products/products';
 
@@ -32,11 +32,11 @@ export class GoodsPage {
     public navParams: NavParams, 
     public modalCtrl: ModalController,
     private storage: Storage,
+    public alertCtrl:AlertController,
     private pserv:ProductsProvider
   ) {
     this.storage.get('isSeller').then(isseller=>{
       this.isSeller = isseller;
-      console.log(this.isSeller);
     });
     this.storage.get('username').then(username=>{
       this.username = username;
@@ -62,7 +62,40 @@ export class GoodsPage {
   }
 
   clkItem(d:any){
-    this.navCtrl.push('GdetailPage', {'data': d});
+    //this.navCtrl.push('GdetailPage', {'data': d});
+
+    this.buygood(d);
+  }
+
+  buygood(data){
+    
+    this.pserv.BuyGz(data.iotUuit, data.iotUnit, data.salesId, res=>{
+      this.GotoZf(data);
+    });
+  }
+
+  GotoZf(data){
+    let alert = this.alertCtrl.create({
+      title: '成功！',
+      subTitle: '订单提交成功，去支付！',
+      buttons: [
+        {
+          text: '确定',
+          handler: () => {
+            this.pserv.BuyCallbackGz(data.iotUuit, data.iotUnit, res=>{
+              this.pserv.showMessage('购买成功！');
+
+              setTimeout(()=>{
+                this.navCtrl.setRoot('GoodsPage');
+              }, 2000);
+
+            });
+          }
+        }
+      ],
+      
+    });
+    alert.present();
   }
 
   segmentChanged(tp:any){
@@ -83,7 +116,7 @@ export class GoodsPage {
   }
 
   addGoods(){
-    this.navCtrl.push('ChoosegzPage');
+    this.navCtrl.push('AddgoodPage');
   }
 
   quitUser(){

@@ -1,12 +1,12 @@
 buylist {
     .new-button{
-        span{
-            display:inline-block;
-            width:42px;line-height:24px;
-            background:#FBD76E;text-align:center;
-            color:#E7A42A;font-size:12px;
-            border-radius:5px;
-        }
+        
+        display:inline-block;
+        line-height:24px;padding:2px 4px;
+        background:#FBD76E;text-align:center;
+        color:#E7A42A;font-size:12px;
+        border-radius:5px;float:right;
+        
     }
     .buy-item{
         .img-container{width:90px;height:67px;overflow:hidden;background:#ccc;border-radius:10px;}
@@ -15,4 +15,15 @@ buylist {
         h3{color:#727272;font-size:14px;}
         p{color:#BABABA;font-size:12px;margin-top:10px;}
     }
+    .spMod{
+        h2{float:left;}
+        small{float:right;}
+        .content{
+            clear:both;
+            span{
+                color:#333;
+            }
+        }
+    }
+    .label-md{margin:0;}
 }

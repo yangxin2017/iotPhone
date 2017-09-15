@@ -1,11 +1,15 @@
 <!-- Generated template for the BuylistComponent component -->
-<ion-item *ngIf="data" class="buy-item" (click)="clkItemList()">
-  <div class="new-button" item-start>
-    <span>NEW</span>
-  </div>
-  <h2>{{data.description}}</h2>
-  <p>{{data.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
-  <span class="img-container" item-end>
+<ion-item *ngIf="data" class="buy-item">
+  <span class="img-container" item-start>
     <img class="img" src="{{data.pictureUrl}}" alt="" />
   </span>
+  <div class="spMod">
+    <h2>{{data.description}}</h2><small>{{data.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</small>
+    <p class="content">
+      <span>价格：<b>￥{{data.price}}</b></span>
+      <button class="new-button" (click)="confirmProduce()">
+          提交订单
+      </button>
+    </p>
+  </div>
 </ion-item>

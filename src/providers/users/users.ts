@@ -78,6 +78,7 @@ export class UsersProvider {
         console.log(res);
         callback(res);
 		}, (res)=>{
+      alert(JSON.stringify(res));
         this.closeLoading();
         if(res && res.data){
           this.showMessage(res.data.msg);

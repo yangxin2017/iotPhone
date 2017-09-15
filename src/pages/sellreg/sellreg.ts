@@ -36,9 +36,10 @@ export class SellregPage {
   }
 
   onSubmit(param:any){
-    console.log(param.value);
-
-    this.navCtrl.push('ChoosegzPage');
+    this.navCtrl.push('GoodsPage');
+  }
+  loginPage(){
+    this.navCtrl.push('LoginPage');
   }
 
 }

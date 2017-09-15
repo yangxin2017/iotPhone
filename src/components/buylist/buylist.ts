@@ -20,8 +20,8 @@ export class BuylistComponent {
   constructor() {
   }
 
-  clkItemList(){
-    this.clkItem.emit('');
+  confirmProduce(){
+    this.clkItem.emit(this.data);
   }
 
 }

@@ -14,14 +14,13 @@ import { ProductsProvider } from '../providers/products/products';
 import { IotsProvider } from '../providers/iots/iots';
 
 export function RestangularConfigFactory (RestangularProvider, appserv) {
-  //RestangularProvider.setBaseUrl('http://60.205.212.99/sales/');
+  RestangularProvider.setBaseUrl('http://60.205.212.99/');
   RestangularProvider.setDefaultHeaders({'Authorization': ''});
 
   let token = appserv.getToken();
   token.then((tk) => {
-    console.log(tk);
-    if(!tk){
-      window.location.href = "/#/choose";
+    if(!tk){//
+      RestangularProvider.setDefaultHeaders({'Authorization': 'c96bc7f5b851bdb29616e3ecdab29514626f414b76d867aea492abaad9774c7b'});
     }else{
       RestangularProvider.setDefaultHeaders({'Authorization': tk});
     }

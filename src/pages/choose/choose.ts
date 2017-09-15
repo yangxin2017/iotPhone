@@ -19,7 +19,6 @@ import { Storage } from '@ionic/storage';
   providers: [ BarcodeScanner, IotsProvider ]
 })
 export class ChoosePage {
-  public uuid:string = '550e8400-e29b-41d4-a716-446655440000';
 
   constructor(
     public navCtrl: NavController, 
@@ -31,13 +30,13 @@ export class ChoosePage {
   ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChoosePage');
-  }
+  ionViewDidLoad() {}
 
-  getGZStatus(callback:any){
-    let isHave:boolean = false;
-    this.iots.getIots(this.uuid, res=>{
+  getGZStatus(uuid, callback:any){
+    let isHave:boolean = true;
+    callback(isHave, false);
+    /*
+    this.iots.getIots(uuid, res=>{
       for(let k in res.statusMapping){
         if(res.statusMapping[k] == 0 || res.statusMapping[k] == 1){
           isHave = true;
@@ -45,11 +44,28 @@ export class ChoosePage {
         }
       }
       callback(isHave, res.statusMapping);
+    });*/
+  }
+
+  ScanEwm(str:string='DFwONv7jUo1VP0jqTMg3kxgyZYQ='){
+
+    this.Scan((str)=>{
+      this.storage.set('ewm', str);
+      this.buyPage(str);
+
+    });
+  }
+  ScanEwmSell(str:string='DFwONv7jUo1VP0jqTMg3kxgyZYQ='){
+
+    this.Scan((str)=>{
+      this.storage.set('ewm', str);
+      this.sellPage(str);
+
     });
   }
 
-  buyPage(){
-    this.getGZStatus((isHave, data)=>{
+  buyPage(str){
+    this.getGZStatus(str, (isHave, data)=>{
       if(!isHave){
         let alert = this.alertCtrl.create({
           title: 'Sorry',
@@ -59,21 +75,34 @@ export class ChoosePage {
         alert.present();
       }else{
         this.storage.set('isSeller', 0);
-        this.navCtrl.push('BuyregPage');
+        //this.navCtrl.push('BuyregPage');
+        this.navCtrl.setRoot('GoodsPage');
       }
     });
   }
-  sellPage(){
-    this.navCtrl.push('SellregPage');
-  }
-  loginPage(){
-    this.navCtrl.push('LoginPage');
+  sellPage(str){
+    this.getGZStatus(str, (isHave, data)=>{
+      if(!isHave){
+        let alert = this.alertCtrl.create({
+          title: 'Sorry',
+          subTitle: '柜子已售空！',
+          buttons: ['确认']
+        });
+        alert.present();
+      }else{
+        this.storage.set('isSeller', 1);
+        this.navCtrl.push('SellregPage');
+      }
+    });
   }
 
-  Scan(){
+  Scan(callback){
     this.barcodeScanner.scan().then((barcodeData) => {
-      console.log(JSON.stringify(barcodeData))
+      let str = barcodeData.text;
+      callback(str);
     }, (err) => {
+      alert('扫码失败');
+      callback('DFwONv7jUo1VP0jqTMg3kxgyZYQ=')
       //error
     });
   }

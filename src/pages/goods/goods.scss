@@ -15,6 +15,9 @@ page-goods {
         .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
             border-color:#12C8B9;
         }
+        &.hasbor{
+            border-bottom:solid 1px #12C8B9;
+        }
     }
     .item{
         color:#999;

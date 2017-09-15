@@ -8,18 +8,15 @@
 
 <header [showLeft]="false" [title]="'商品列表'" (clkAddBut)="addGoods($event)" [showAdd]="isSeller"></header>
 
-<div class="lists">
+<div class="lists" [class.hasbor]="!isSeller">
     <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="lists">
+      <ion-segment-button value="lists" *ngIf="isSeller">
         商品列表
       </ion-segment-button>
       <ion-segment-button value="self" *ngIf="isSeller">
         我的列表
       </ion-segment-button>
-      <ion-segment-button value="status" *ngIf="isSeller">
-        柜子状态
-      </ion-segment-button>
-      <ion-segment-button value="infor">
+      <ion-segment-button value="infor" *ngIf="isSeller">
         个人信息
       </ion-segment-button>
     </ion-segment>
@@ -33,10 +30,10 @@
 
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'lists'">
-      <carousel [data]="datas"></carousel>
+      <!--<carousel [data]="datas"></carousel>-->
       
       <ion-list *ngIf="datas && datas.length > 0">
-        <buylist *ngFor="let d of datas" [data]="d" (clkItem)="clkItem(d)"></buylist>
+        <buylist *ngFor="let d of datas" [data]="d" (clkItem)="clkItem($event)"></buylist>
       </ion-list>
 
       <div *ngIf="datas && datas.length <= 0" class="t-center">
@@ -46,7 +43,7 @@
 
     <div *ngSwitchCase="'self'">
       <ion-list *ngIf="mdatas && mdatas.length > 0">
-        <buylist *ngFor="let d of mdatas" [data]="d" (clkItem)="clkItem(d)"></buylist>
+        <buylist *ngFor="let d of mdatas" [data]="d" (clkItem)="clkItem($event)"></buylist>
       </ion-list>
       <div *ngIf="mdatas && mdatas.length <= 0" class="t-center">
         没有查询到数据

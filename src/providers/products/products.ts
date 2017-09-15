@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ToastController,LoadingController } from 'ionic-angular';
 import { Restangular } from 'ngx-restangular';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the ProductsProvider provider.
@@ -13,10 +14,17 @@ import { Restangular } from 'ngx-restangular';
 export class ProductsProvider {
   public loader:any = null;
   public loaderTime:any = null;
-  public uuid:string = 'DFwONv7jUo1VP0jqTMg3kxgyZYQ=';
+  public uuid:string = '';
 
-  constructor(private rest: Restangular, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(private rest: Restangular, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private store:Storage) {
     
+  }
+
+  private getEWM(callback){
+    this.store.get('ewm').then(ewm=>{
+      this.uuid = ewm;
+      callback();
+    });
   }
 
   public showLoading(){
@@ -50,21 +58,25 @@ export class ProductsProvider {
   }
 
   public getAllLists(callback){
-    this.showLoading();
-    let param = {
-        iotUuit: this.uuid
-    };
-    this.rest.all("sales").customGET("v1/products/cust", param).subscribe(res=>{
-        this.closeLoading();
-        callback(res);
-		}, (res)=>{
-        this.closeLoading();
-		    if(res && res.data){
-          this.showMessage(res.data.msg);
-        }else{
-          this.showMessage('服务器响应错误！');
-        }
-		});
+    this.getEWM(()=>{
+      this.showLoading();
+      let param = {
+          iotUuit: this.uuid
+      };
+      this.rest.all("sales").customGET("v1/products/cust", param).subscribe(res=>{
+          this.closeLoading();
+          callback(res);
+      }, (res)=>{
+          this.closeLoading();
+          if(res && res.data){
+            this.showMessage(res.data.msg);
+          }else{
+            this.showMessage('服务器响应错误！');
+          }
+      });
+
+    });
+    
   }
 
   public getAllMyLists(phone, callback){
@@ -109,62 +121,73 @@ export class ProductsProvider {
   }
 
   public CloseGz(uuid, unit, callback){
-    this.showLoading();
-    let param = {
-        uuid: this.uuid,
-        unit: unit
-    };
-    this.rest.all("sales").customPOST(null, "v1/products/close", param).subscribe(res=>{
-        this.closeLoading();
-        callback(res);
-		}, (res)=>{
-        this.closeLoading();
-		    if(res && res.data){
-          this.showMessage(res.data.msg);
-        }else{
-          this.showMessage('服务器响应错误！');
-        }
-		});
+    this.getEWM(()=>{
+      this.showLoading();
+      let param = {
+          uuid: this.uuid,
+          unit: unit
+      };
+      this.rest.all("sales").customPOST(null, "v1/products/close", param).subscribe(res=>{
+          this.closeLoading();
+          callback(res);
+      }, (res)=>{
+          this.closeLoading();
+          if(res && res.data){
+            this.showMessage(res.data.msg);
+          }else{
+            this.showMessage('服务器响应错误！');
+          }
+      });
+
+    });
+    
   }
   
   public BuyGz(uuid, unit, custid, callback){
-    this.showLoading();
-    let param = {
-        iotUuit: this.uuid,
-        iotUnit: unit,
-        custId: custid
-    };
-    this.rest.all("sales").customPOST(null, "v1/products/buy", param).subscribe(res=>{
-        this.closeLoading();
-        callback(res);
-    }, (res)=>{
-        this.closeLoading();
-        if(res && res.data){
-          this.showMessage(res.data.msg);
-        }else{
-          this.showMessage('服务器响应错误！');
-        }
+    this.getEWM(()=>{
+      this.showLoading();
+      let param = {
+          iotUuit: this.uuid,
+          iotUnit: unit,
+          custId: custid
+      };
+      this.rest.all("sales").customPOST(null, "v1/products/buy", param).subscribe(res=>{
+          this.closeLoading();
+          callback(res);
+      }, (res)=>{
+          this.closeLoading();
+          if(res && res.data){
+            this.showMessage(res.data.msg);
+          }else{
+            this.showMessage('服务器响应错误！');
+          }
+      });
+
     });
+    
   }
   
   public BuyCallbackGz(uuid, unit, callback){
-    this.showLoading();
-    let param = {
-        uuid: this.uuid,
-        unit: unit
-    };
-    this.rest.all("sales").customPOST(null, "v1/products/callback", param).subscribe(res=>{
-        this.closeLoading();
-        callback(res);
-    }, (res)=>{
-        this.closeLoading();
-        if(res && res.data){
-          this.showMessage(res.data.msg);
-        }else{
-          this.showMessage('服务器响应错误！');
-        }
+    this.getEWM(()=>{
+      this.showLoading();
+      let param = {
+          uuid: this.uuid,
+          unit: unit
+      };
+      this.rest.all("sales").customPOST(null, "v1/products/callback", param).subscribe(res=>{
+          this.closeLoading();
+          callback(res);
+      }, (res)=>{
+          this.closeLoading();
+          if(res && res.data){
+            this.showMessage(res.data.msg);
+          }else{
+            this.showMessage('服务器响应错误！');
+          }
+      });
+
     });
+    
   }
   
-
 }
